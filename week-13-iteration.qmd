@@ -21,8 +21,6 @@ library(broom)
 sw_people %>% pluck(11, "height")
 ```
 
-
-
 ```{r}
 #| label: data-prep
 
@@ -82,6 +80,12 @@ exams %>% map(mean, na.rm = TRUE)
 #| label: map shorthand
 x <- c("hw1", "hw2","hw3","hw4","hw5","hw6","hw7","hw8","hw9","hw10")
 set_names(exams$student1, nm = x)
+exams %>% 
+  map(set_names, nm=x) %>%
+  map_dfr(bind_rows) %>%
+  summarise(across(hw1:hw2, sum))
+
+
 ```
 
 
@@ -92,7 +96,7 @@ Complete the code to apply the test below to every element of the list. Return t
 `length(<input> == 10)`
 
 ```{r}
-exams %>% map(set_names, nm=x)
+exams %>% map_lgl(~length(.) == 10)
 ```
 
 ## Your Turn 3
@@ -102,7 +106,7 @@ Recompute the grades by dropping the lowest score and then taking the mean of th
 `(sum(<input>) - min(<input>)) / 9`
 
 ```{r}
-
+exams %>% map_dbl(~(sum(.) - min(.)) / 9)
 ```
 
 
@@ -114,7 +118,7 @@ Compute a final grade for each student, where the final grade is the average tes
 
 ```{r}
 exams %>% 
-  _________(____________, ~________________)
+  map2_dbl(extra_credit, ~mean(.x) + .y)
 ```
 
 
