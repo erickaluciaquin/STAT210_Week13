@@ -1,5 +1,7 @@
 ---
 title: "Iteration"
+author: "Ericka Quintero"
+date: "25 April 2025"
 format: html
 embed-resources: true
 ---
@@ -7,10 +9,18 @@ embed-resources: true
 ```{r}
 #| label: setup
 #| include: false
+install.packages("repurrrsive")
 library(tidyverse)
 library(repurrrsive)
 library(broom)
 ```
+
+```{r}
+#| label: using purrr
+#| include: false
+sw_people %>% pluck(11, "height")
+```
+
 
 
 ```{r}
@@ -40,6 +50,14 @@ tb <-
   drop_na(n)
 ```
 
+```{r}
+mean(exams$student1)
+mean(exams$student2)
+mean(exams$student3)
+mean(exams$student4)
+mean(exams$student5)
+
+```
 
 
 # Mapping
@@ -53,10 +71,18 @@ Run the code in the chunk. What does it do?
 
 ```{r}
 #View(exams)
-exams %>% map(mean)
+mean(exams$student1)
+mean(exams$student2)
+exams %>% map(mean, na.rm = TRUE)
 ```
 
-## map shorthand
+
+
+```{r}
+#| label: map shorthand
+x <- c("hw1", "hw2","hw3","hw4","hw5","hw6","hw7","hw8","hw9","hw10")
+set_names(exams$student1, nm = x)
+```
 
 
 ## Your Turn 2
@@ -66,7 +92,7 @@ Complete the code to apply the test below to every element of the list. Return t
 `length(<input> == 10)`
 
 ```{r}
-exams %>% ______(_________________)
+exams %>% map(set_names, nm=x)
 ```
 
 ## Your Turn 3
