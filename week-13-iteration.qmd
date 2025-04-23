@@ -9,7 +9,6 @@ embed-resources: true
 ```{r}
 #| label: setup
 #| include: false
-install.packages("repurrrsive")
 library(tidyverse)
 library(repurrrsive)
 library(broom)
